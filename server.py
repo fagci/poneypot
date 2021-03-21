@@ -13,15 +13,13 @@ def main():
     cfg_parser = ConfigParser()
     cfg_parser.read('config.ini')
 
-    modules = cfg_parser.sections()
-
     servers = []
     threads = []
 
-    for module_name in modules:
-        m_cfg = cfg_parser[module_name]
+    for module_name in cfg_parser.sections():
+        cfg = cfg_parser[module_name]
 
-        if not m_cfg.get('enabled'):
+        if not cfg.get('enabled'):
             continue
 
         try:
@@ -32,11 +30,11 @@ def main():
 
         module = getattr(imported, module_name)
 
-        host = m_cfg.get('host', '0.0.0.0')
+        host = cfg.get('host', '0.0.0.0')
 
         c = getattr(module, camel_cased(module_name))
 
-        for port in m_cfg.get('port').split(','):
+        for port in cfg.get('port').split(','):
             p = int(port.strip())
             print('[*] Run', module_name, 'on', p)
             server = ThreadingTCPServer((host, p), c)

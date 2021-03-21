@@ -10,9 +10,7 @@ class Base(ThreadingMixIn, BaseRequestHandler):
 
     def __init__(self, request, client_address, server: ThreadingTCPServer):
         self.client_host, self.client_port = client_address
-        print('New client', self.client_host, 'req on', server.server_address)
         if Base.logfile is None:
-            print('Init logfile')
             class_name = self.__class__.__name__
             logname = '%s.log' % class_name.lower()
             c_path = Path(os.path.dirname(os.path.abspath(__file__)))
