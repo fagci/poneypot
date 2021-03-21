@@ -28,20 +28,22 @@ def main():
             imported = __import__('modules.%s' % module_name)
         except ModuleNotFoundError as e:
             print('[E]', e)
-            break
+            return
 
         module = getattr(imported, module_name)
 
         host = m_cfg.get('host', '0.0.0.0')
-        port = int(m_cfg.get('port'))
 
         c = getattr(module, camel_cased(module_name))
 
-        server = ThreadingTCPServer((host, port), c)
-        servers.append(server)
+        for port in m_cfg.get('port').split(','):
+            p = int(port.strip())
+            print('[*] Run', module_name, 'on', p)
+            server = ThreadingTCPServer((host, p), c)
+            servers.append(server)
 
-        thread = Thread(target=server.serve_forever, daemon=True)
-        threads.append(thread)
+            thread = Thread(target=server.serve_forever, daemon=True)
+            threads.append(thread)
 
     for t in threads:
         t.start()

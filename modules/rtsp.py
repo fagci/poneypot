@@ -2,6 +2,8 @@ from modules.base import Base
 
 
 class Rtsp(Base):
+    PROTOCOL = 'RTSP/1.0'
+
     def handle_each(self):
         data = self.request.recv(1024).decode().strip()
 
@@ -19,7 +21,7 @@ class Rtsp(Base):
 
         cseq = 1
 
-        if lines[1].startswith('CSeq:'):
+        if len(lines) > 1 and lines[1].startswith('CSeq:'):
             _, cseq = lines[1].split(None, 1)
 
         headers = {'CSeq': cseq}
