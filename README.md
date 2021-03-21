@@ -1,2 +1,4 @@
-# poneypot
-PoneyPot -- Python HoneyPot framework
+# PoneyPot
+
+🦄:honey_pot: PoneyPot  
+-- Python HoneyPot framework
