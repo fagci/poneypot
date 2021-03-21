@@ -1,6 +1,6 @@
 # PoneyPot
 
 🦄:honey_pot: PoneyPot  
--- Python HoneyPot framework
+-- Python HoneyPot multithreaded multiservice framework
 
 ```// with no dependencies```
